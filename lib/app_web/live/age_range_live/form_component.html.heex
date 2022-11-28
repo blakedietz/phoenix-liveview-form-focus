@@ -1,0 +1,28 @@
+<div>
+  <h2><%= @title %></h2>
+
+  <.form
+    let={f}
+    for={@changeset}
+    id="age_range-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <%= label f, :starting_age %>
+    <%= number_input f, :starting_age %>
+    <%= error_tag f, :starting_age %>
+  
+    <%= label f, :ending_age %>
+    <%= number_input f, :ending_age %>
+    <%= error_tag f, :ending_age %>
+  
+    <%= label f, :step %>
+    <%= number_input f, :step %>
+    <%= error_tag f, :step %>
+  
+    <div>
+      <%= submit "Save", phx_disable_with: "Saving..." %>
+    </div>
+  </.form>
+</div>

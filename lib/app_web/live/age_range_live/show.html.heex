@@ -1,0 +1,36 @@
+<h1>Show Age range</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.age_range_show_path(@socket, :show, @age_range)}>
+    <.live_component
+      module={AppWeb.AgeRangeLive.FormComponent}
+      id={@age_range.id}
+      title={@page_title}
+      action={@live_action}
+      age_range={@age_range}
+      return_to={Routes.age_range_show_path(@socket, :show, @age_range)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Starting age:</strong>
+    <%= @age_range.starting_age %>
+  </li>
+
+  <li>
+    <strong>Ending age:</strong>
+    <%= @age_range.ending_age %>
+  </li>
+
+  <li>
+    <strong>Step:</strong>
+    <%= @age_range.step %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.age_range_show_path(@socket, :edit, @age_range), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.age_range_index_path(@socket, :index) %></span>

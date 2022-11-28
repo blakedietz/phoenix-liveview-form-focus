@@ -1,0 +1,43 @@
+<h1>Listing Age range</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.age_range_index_path(@socket, :index)}>
+    <.live_component
+      module={AppWeb.AgeRangeLive.FormComponent}
+      id={@age_range.id || :new}
+      title={@page_title}
+      action={@live_action}
+      age_range={@age_range}
+      return_to={Routes.age_range_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Starting age</th>
+      <th>Ending age</th>
+      <th>Step</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="age_range">
+    <%= for age_range <- @age_range_collection do %>
+      <tr id={"age_range-#{age_range.id}"}>
+        <td><%= age_range.starting_age %></td>
+        <td><%= age_range.ending_age %></td>
+        <td><%= age_range.step %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.age_range_show_path(@socket, :show, age_range) %></span>
+          <span><%= live_patch "Edit", to: Routes.age_range_index_path(@socket, :edit, age_range) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: age_range.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Age range", to: Routes.age_range_index_path(@socket, :new) %></span>
