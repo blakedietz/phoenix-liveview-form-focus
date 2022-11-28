@@ -14,12 +14,14 @@ defmodule AppWeb.AgeRangeLive.FormComponent do
   end
 
   @impl true
+  # Purely used for illustrative purposes. Note that we're pattern matching on age_range.step via the "_target" argument.
+  # So this is only going to apply to the step element form changes.
   def handle_event(
         "validate",
         %{
-          "_taraget" => ["age_range", "step"],
+          "_target" => ["age_range", "step"],
           "age_range" => %{"starting_age" => starting_age}
-        } = age_range_params,
+        },
         socket
       ) do
     changeset =
@@ -27,6 +29,8 @@ defmodule AppWeb.AgeRangeLive.FormComponent do
       |> Demo.change_age_range(%{
         starting_age: starting_age |> String.to_integer(),
         ending_age: (starting_age |> String.to_integer()) + 10,
+        # Here we expliclity are trying to set the value to 0, but it does nothing. See
+        # images/in-focus.gif.
         step: 0
       })
       |> Map.put(:action, :validate)
@@ -42,6 +46,7 @@ defmodule AppWeb.AgeRangeLive.FormComponent do
     changeset =
       socket.assigns.age_range
       |> Demo.change_age_range(%{
+        # Here' we're modifying the ending_age form element and changes are being accepted.
         starting_age: starting_age |> String.to_integer(),
         ending_age: (starting_age |> String.to_integer()) + 10
       })
