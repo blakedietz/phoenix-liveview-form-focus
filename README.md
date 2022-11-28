@@ -8,6 +8,8 @@ When modifying form values that are driven by a changeset, it is possible to mod
 
 ### Out of focus elements can be modified
 
+The element that is in focus in the example is `starting_age`. `ending_age` is not in focus and is having its value updated when the `starting_age` is updated.
+
 ```elixir
   def handle_event(
         "validate",
@@ -26,11 +28,14 @@ When modifying form values that are driven by a changeset, it is possible to mod
     {:noreply, assign(socket, :changeset, changeset)}
   end
 ```
+
 Associated code block [here](https://github.com/blakedietz/phoenix-liveview-form-focus/blob/1a6383d251405460202e152d749df624074a6e25/lib/app_web/live/age_range_live/form_component.ex#L41).
 
 ![](./images/not-in-focus.gif)
 
 ### In focus elements cannot be modified
+
+The element that is in focus is the `age_range`. When attempting to modify the `age_range` from the server side, the value is not modified.
 
 Here we try to capture all changes for the step input only. Upon change we attempt to set the step value to 0. Note that it doesn't override the form value on the client side.
 
@@ -57,9 +62,11 @@ Here we try to capture all changes for the step input only. Upon change we attem
     {:noreply, assign(socket, :changeset, changeset)}
   end
 ```
-Associated code block [here]([true](https://github.com/blakedietz/phoenix-liveview-form-focus/blob/1a6383d251405460202e152d749df624074a6e25/lib/app_web/live/age_range_live/form_component.ex#L16)).
+
+Associated code block [here](<[true](https://github.com/blakedietz/phoenix-liveview-form-focus/blob/1a6383d251405460202e152d749df624074a6e25/lib/app_web/live/age_range_live/form_component.ex#L16)>).
 
 ![](./images/in-focus.gif)
+
 ## Running
 
 To start your Phoenix server:
